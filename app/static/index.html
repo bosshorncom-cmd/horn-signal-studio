@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horn Signal Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Horn Signal Studio</h1>
+  <p>Rehearse railway and marine horn signals, check crossing timing and estimate how far a horn carries.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Signal</h2>
+    <label>Catalog <select id="catalog"></select></label>
+    <label>Pattern <input id="pattern" value="- - o -" spellcheck="false"></label>
+    <p class="hint"><code>-</code> or <code>L</code> long, <code>o</code> or <code>S</code> short, separated by spaces.</p>
+    <div class="row">
+      <label>Short, ms <input id="short" type="number" value="1000" min="100" max="5000" step="100"></label>
+      <label>Long, ms <input id="long" type="number" value="3000" min="500" max="15000" step="100"></label>
+      <label>Gap, ms <input id="gap" type="number" value="1000" min="100" max="10000" step="100"></label>
+    </div>
+    <div id="meaning" class="meaning"></div>
+    <div id="timeline" class="timeline" aria-label="timeline"></div>
+    <div class="row">
+      <button id="play">Play preview</button>
+      <button id="stop" class="secondary">Stop</button>
+      <label class="inline">Volume <input id="vol" type="range" min="0" max="0.5" step="0.01" value="0.15"></label>
+    </div>
+    <p class="hint">The preview is a soft three-note chord through your speakers, not a real horn. Keep the volume low.</p>
+  </section>
+
+  <section class="card">
+    <h2>Crossing onset (49 CFR 222.21)</h2>
+    <label>Train speed, mph <input id="mph" type="number" value="45" min="1" max="125"></label>
+    <div id="onset" class="result"></div>
+    <p class="hint">The horn starts at least 15 and at most 20 seconds before the locomotive enters the crossing. Above 60 mph it need not start more than a quarter mile (1,320 ft) out.</p>
+  </section>
+
+  <section class="card">
+    <h2>Level at distance</h2>
+    <div class="row">
+      <label>dB(A) at 100 ft <input id="ref" type="number" value="110" min="40" max="160"></label>
+      <label>Distance, ft <input id="dist" type="number" value="1000" min="1"></label>
+    </div>
+    <div id="level" class="result"></div>
+    <p class="hint">Free-field inverse-square estimate (6 dB less per doubling). Locomotive horns must measure 96-110 dB(A) at 100 ft (49 CFR 229.129). Ground, buildings and air absorption make real levels lower.</p>
+  </section>
+
+  <section class="card">
+    <h2>Saved patterns</h2>
+    <div class="row">
+      <label>Name <input id="sname" maxlength="80" placeholder="Yard test, club start signal..."></label>
+      <label>Note <input id="snote" maxlength="300"></label>
+      <button id="save">Save current</button>
+    </div>
+    <ul id="saved"></ul>
+  </section>
+</main>
+<footer>
+  Study aid only; the rulebook that applies to your railway or waterway wins.
+  Background on portable horns and their dB ratings: <a href="https://hornguns.com/">train horn</a> guide by Horn Guns.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
